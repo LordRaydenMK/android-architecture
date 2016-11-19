@@ -27,7 +27,12 @@ class Task
 /**
  * Use this constructor to specify a completed Task if the Task already has an id (copy of
  * another Task).
-
+ *
+ * Use this constructor (String, String) to create a new active Task.
+ *
+ * Use this constructor (String, String, String) to create an active Task if the Task already has an id
+ * (copy of another Task).
+ *
  * @param title       title of the task
  * *
  * @param description description of the task
@@ -48,17 +53,12 @@ class Task
      * *
      * @param completed   true if the task is completed, false if it's active
      */
-    constructor(title: String?, description: String?, completed: Boolean) : this(title, description, UUID.randomUUID().toString(), completed) {
+    constructor(title: String?, description: String?, completed: Boolean) : this(title, description,
+            UUID.randomUUID().toString(), completed) {
     }
 
     val titleForList: String?
-        get() {
-            if (!Strings.isNullOrEmpty(title)) {
-                return title
-            } else {
-                return description
-            }
-        }
+        get() = if (!Strings.isNullOrEmpty(title)) title else description
 
     val isActive: Boolean
         get() = !isCompleted
@@ -66,10 +66,10 @@ class Task
     val isEmpty: Boolean
         get() = Strings.isNullOrEmpty(title) && Strings.isNullOrEmpty(description)
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) return true
-        if (o == null || javaClass != o.javaClass) return false
-        val task = o as Task?
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || javaClass != other.javaClass) return false
+        val task = other as Task?
         return Objects.equal(id, task!!.id) &&
                 Objects.equal(title, task.title) &&
                 Objects.equal(description, task.description)
@@ -83,20 +83,3 @@ class Task
         return "Task with title " + title!!
     }
 }
-/**
- * Use this constructor to create a new active Task.
-
- * @param title       title of the task
- * *
- * @param description description of the task
- */
-/**
- * Use this constructor to create an active Task if the Task already has an id (copy of another
- * Task).
-
- * @param title       title of the task
- * *
- * @param description description of the task
- * *
- * @param id          id of the task
- */
