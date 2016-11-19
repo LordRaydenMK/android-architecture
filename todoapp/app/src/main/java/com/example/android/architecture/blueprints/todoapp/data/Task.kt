@@ -69,8 +69,8 @@ class Task
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
-        val task = other as Task?
-        return Objects.equal(id, task!!.id) &&
+        val task = other as Task
+        return Objects.equal(id, task.id) &&
                 Objects.equal(title, task.title) &&
                 Objects.equal(description, task.description)
     }
