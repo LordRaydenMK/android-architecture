@@ -23,7 +23,7 @@ import java.util.*
 /**
  * Immutable model class for a Task.
  */
-class Task
+data class Task
 /**
  * Use this constructor to specify a completed Task if the Task already has an id (copy of
  * another Task).
@@ -39,7 +39,7 @@ class Task
  * *
  * @param id          id of the task
  * *
- * @param completed   true if the task is completed, false if it's active
+ * @param isCompleted   true if the task is completed, false if it's active
  */
 @JvmOverloads constructor(val title: String?, val description: String?,
                           val id: String = UUID.randomUUID().toString(), val isCompleted: Boolean = false) {
