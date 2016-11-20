@@ -17,17 +17,44 @@
 package com.example.android.architecture.blueprints.todoapp.data.source.remote
 
 import android.os.Handler
-
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
 import com.google.common.collect.Lists
-import java.util.LinkedHashMap
+import java.util.*
 
 /**
  * Implementation of the data source that adds a latency simulating network.
  */
 class TasksRemoteDataSource// Prevent direct instantiation.
 private constructor() : TasksDataSource {
+
+    companion object {
+
+        private var INSTANCE: TasksRemoteDataSource? = null
+
+        private val SERVICE_LATENCY_IN_MILLIS = 5000
+
+        private val TASKS_SERVICE_DATA: MutableMap<String, Task>
+
+        init {
+            TASKS_SERVICE_DATA = LinkedHashMap<String, Task>(2)
+            addTask("Build tower in Pisa", "Ground looks good, no foundation work required.")
+            addTask("Finish bridge in Tacoma", "Found awesome girders at half the cost!")
+        }
+
+        val instance: TasksRemoteDataSource
+            get() {
+                if (INSTANCE == null) {
+                    INSTANCE = TasksRemoteDataSource()
+                }
+                return INSTANCE!!
+            }
+
+        private fun addTask(title: String, description: String) {
+            val newTask = Task(title, description)
+            TASKS_SERVICE_DATA.put(newTask.id, newTask)
+        }
+    }
 
     /**
      * Note: [LoadTasksCallback.onDataNotAvailable] is never fired. In a real remote data
@@ -50,7 +77,9 @@ private constructor() : TasksDataSource {
 
         // Simulate network by delaying the execution.
         val handler = Handler()
-        handler.postDelayed({ callback.onTaskLoaded(task) }, SERVICE_LATENCY_IN_MILLIS.toLong())
+        task?.let {
+            handler.postDelayed({ callback.onTaskLoaded(task) }, SERVICE_LATENCY_IN_MILLIS.toLong())
+        }
     }
 
     override fun saveTask(task: Task) {
@@ -98,33 +127,5 @@ private constructor() : TasksDataSource {
 
     override fun deleteTask(taskId: String) {
         TASKS_SERVICE_DATA.remove(taskId)
-    }
-
-    companion object {
-
-        private var INSTANCE: TasksRemoteDataSource? = null
-
-        private val SERVICE_LATENCY_IN_MILLIS = 5000
-
-        private val TASKS_SERVICE_DATA: MutableMap<String, Task>
-
-        init {
-            TASKS_SERVICE_DATA = LinkedHashMap<String, Task>(2)
-            addTask("Build tower in Pisa", "Ground looks good, no foundation work required.")
-            addTask("Finish bridge in Tacoma", "Found awesome girders at half the cost!")
-        }
-
-        val instance: TasksRemoteDataSource
-            get() {
-                if (INSTANCE == null) {
-                    INSTANCE = TasksRemoteDataSource()
-                }
-                return INSTANCE
-            }
-
-        private fun addTask(title: String, description: String) {
-            val newTask = Task(title, description)
-            TASKS_SERVICE_DATA.put(newTask.id, newTask)
-        }
     }
 }
