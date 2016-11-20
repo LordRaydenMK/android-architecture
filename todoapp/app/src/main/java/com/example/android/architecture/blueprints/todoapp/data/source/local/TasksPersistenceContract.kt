@@ -14,25 +14,24 @@
  * limitations under the License.
  */
 
-package com.example.android.architecture.blueprints.todoapp.data.source.local;
+package com.example.android.architecture.blueprints.todoapp.data.source.local
 
-import android.provider.BaseColumns;
+import android.provider.BaseColumns
 
 /**
  * The contract used for the db to save the tasks locally.
  */
-public final class TasksPersistenceContract {
-
-    // To prevent someone from accidentally instantiating the contract class,
-    // give it an empty constructor.
-    private TasksPersistenceContract() {}
+object TasksPersistenceContract {
 
     /* Inner class that defines the table contents */
-    public static abstract class TaskEntry implements BaseColumns {
-        public static final String TABLE_NAME = "task";
-        public static final String COLUMN_NAME_ENTRY_ID = "entryid";
-        public static final String COLUMN_NAME_TITLE = "title";
-        public static final String COLUMN_NAME_DESCRIPTION = "description";
-        public static final String COLUMN_NAME_COMPLETED = "completed";
+    abstract class TaskEntry {
+        companion object {
+            val _ID = BaseColumns._ID
+            val TABLE_NAME = "task"
+            val COLUMN_NAME_ENTRY_ID = "entryid"
+            val COLUMN_NAME_TITLE = "title"
+            val COLUMN_NAME_DESCRIPTION = "description"
+            val COLUMN_NAME_COMPLETED = "completed"
+        }
     }
 }
