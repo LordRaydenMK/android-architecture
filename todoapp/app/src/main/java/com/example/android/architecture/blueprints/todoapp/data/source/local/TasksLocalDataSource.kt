@@ -34,7 +34,6 @@ private constructor(context: Context) : TasksDataSource {
     private val mDbHelper: TasksDbHelper
 
     init {
-        checkNotNull(context)
         mDbHelper = TasksDbHelper(context)
     }
 
@@ -46,7 +45,7 @@ private constructor(context: Context) : TasksDataSource {
             if (INSTANCE == null) {
                 INSTANCE = TasksLocalDataSource(context)
             }
-            return INSTANCE
+            return INSTANCE!!
         }
     }
 
@@ -58,7 +57,8 @@ private constructor(context: Context) : TasksDataSource {
         val tasks = ArrayList<Task>()
         val db = mDbHelper.readableDatabase
 
-        val projection = arrayOf(TaskEntry.COLUMN_NAME_ENTRY_ID, TaskEntry.COLUMN_NAME_TITLE, TaskEntry.COLUMN_NAME_DESCRIPTION, TaskEntry.COLUMN_NAME_COMPLETED)
+        val projection = arrayOf(TaskEntry.COLUMN_NAME_ENTRY_ID, TaskEntry.COLUMN_NAME_TITLE,
+                TaskEntry.COLUMN_NAME_DESCRIPTION, TaskEntry.COLUMN_NAME_COMPLETED)
 
         val c = db.query(
                 TaskEntry.TABLE_NAME, projection, null, null, null, null, null)
@@ -93,7 +93,8 @@ private constructor(context: Context) : TasksDataSource {
     override fun getTask(taskId: String, callback: TasksDataSource.GetTaskCallback) {
         val db = mDbHelper.readableDatabase
 
-        val projection = arrayOf(TaskEntry.COLUMN_NAME_ENTRY_ID, TaskEntry.COLUMN_NAME_TITLE, TaskEntry.COLUMN_NAME_DESCRIPTION, TaskEntry.COLUMN_NAME_COMPLETED)
+        val projection = arrayOf(TaskEntry.COLUMN_NAME_ENTRY_ID, TaskEntry.COLUMN_NAME_TITLE,
+                TaskEntry.COLUMN_NAME_DESCRIPTION, TaskEntry.COLUMN_NAME_COMPLETED)
 
         val selection = TaskEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?"
         val selectionArgs = arrayOf(taskId)
