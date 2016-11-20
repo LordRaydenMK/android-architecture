@@ -58,7 +58,7 @@ public class TasksLocalDataSourceTest {
 
     @Before
     public void setup() {
-         mLocalDataSource = TasksLocalDataSource.getInstance(
+         mLocalDataSource = TasksLocalDataSource.Companion.getInstance(
                  InstrumentationRegistry.getTargetContext());
     }
 
