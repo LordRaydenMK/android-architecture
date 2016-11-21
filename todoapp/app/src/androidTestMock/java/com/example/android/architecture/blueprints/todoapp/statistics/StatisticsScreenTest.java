@@ -69,7 +69,7 @@ public class StatisticsScreenTest {
     @Before
     public void intentWithStubbedTaskId() {
         // Given some tasks
-        TasksRepository.destroyInstance();
+        TasksRepository.Companion.destroyInstance();
         FakeTasksRemoteDataSource.getInstance().addTasks(new Task("Title1", "", false));
         FakeTasksRemoteDataSource.getInstance().addTasks(new Task("Title2", "", true));
 

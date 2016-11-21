@@ -35,7 +35,7 @@ public class Injection {
 
     public static TasksRepository provideTasksRepository(@NonNull Context context) {
         checkNotNull(context);
-        return TasksRepository.getInstance(FakeTasksRemoteDataSource.getInstance(),
+        return TasksRepository.Companion.getInstance(FakeTasksRemoteDataSource.getInstance(),
                 TasksLocalDataSource.Companion.getInstance(context));
     }
 }

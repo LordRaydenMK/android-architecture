@@ -97,7 +97,7 @@ public class TaskDetailScreenTest {
      */
     private void startActivityWithWithStubbedTask(Task task) {
         // Add a task stub to the fake service api layer.
-        TasksRepository.destroyInstance();
+        TasksRepository.Companion.destroyInstance();
         FakeTasksRemoteDataSource.getInstance().addTasks(task);
 
         // Lazily start the Activity from the ActivityTestRule this time to inject the start Intent
