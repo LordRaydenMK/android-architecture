@@ -118,7 +118,7 @@ private constructor(private val tasksRemoteDataSource: TasksDataSource,
         tasksRemoteDataSource.completeTask(task)
         tasksLocalDataSource.completeTask(task)
 
-        val completedTask = Task(task.title, task.description, task.id, true)
+        val completedTask = task.copy(isCompleted = true)
 
         // Do in memory cache update to keep the app UI up to date
         mCachedTasks.put(task.id, completedTask)
@@ -132,7 +132,7 @@ private constructor(private val tasksRemoteDataSource: TasksDataSource,
         tasksRemoteDataSource.activateTask(task)
         tasksLocalDataSource.activateTask(task)
 
-        val activeTask = Task(task.title, task.description, task.id)
+        val activeTask = task.copy(isCompleted = false)
 
         // Do in memory cache update to keep the app UI up to date
         mCachedTasks.put(task.id, activeTask)

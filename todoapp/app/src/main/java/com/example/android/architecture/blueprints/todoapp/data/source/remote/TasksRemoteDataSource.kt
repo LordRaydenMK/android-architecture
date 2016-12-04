@@ -87,7 +87,7 @@ private constructor() : TasksDataSource {
     }
 
     override fun completeTask(task: Task) {
-        val completedTask = Task(task.title, task.description, task.id, true)
+        val completedTask = task.copy(isCompleted = true)
         TASKS_SERVICE_DATA.put(task.id, completedTask)
     }
 
@@ -97,7 +97,7 @@ private constructor() : TasksDataSource {
     }
 
     override fun activateTask(task: Task) {
-        val activeTask = Task(task.title, task.description, task.id)
+        val activeTask = task.copy(isCompleted = false)
         TASKS_SERVICE_DATA.put(task.id, activeTask)
     }
 
