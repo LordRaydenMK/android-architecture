@@ -21,7 +21,6 @@ import android.content.Context
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
 import com.example.android.architecture.blueprints.todoapp.data.source.local.TasksPersistenceContract.TaskEntry
-import com.google.common.base.Preconditions.checkNotNull
 import java.util.*
 
 
@@ -124,7 +123,6 @@ private constructor(context: Context) : TasksDataSource {
     }
 
     override fun saveTask(task: Task) {
-        checkNotNull(task)
         val db = mDbHelper.writableDatabase
 
         val values = ContentValues()
